@@ -1,0 +1,3 @@
+# the next libraries can be installed with pip install.
+# Also read requirements_explained.txt to install other dependencies.
+Django==3.2.8

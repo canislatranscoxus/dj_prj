@@ -1,0 +1,22 @@
+{% load static %}
+
+{% block content %}
+
+
+<h1>Select a pet</h1>
+
+<p>
+    <br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+</p>
+
+    
+<div >
+    <form method="post" class="TakePetForm" >
+        {{ form.as_p }}
+        <p><input type="submit" value='Send' ></p><br>
+        {% csrf_token %}
+      </form>
+</div>
+
+
+{% endblock %}

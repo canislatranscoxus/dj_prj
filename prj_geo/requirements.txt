@@ -1,0 +1,6 @@
+
+Django==3.2.8
+
+simplejson==3.17.6
+vectorformats==0.1
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Confirm your location- Leaflet</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		#map {
+			width: 900px;
+			height: 500px;
+		}
+	</style>
+
+	
+</head>
+<body>
+
+	<h1>Confirm your location</h1>
+
+	<div id='map'></div>
+
+	<script>
+		var map = L.map('map').fitWorld();
+
+		var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+				'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+			id: 'mapbox/streets-v11',
+			tileSize: 512,
+			zoomOffset: -1
+		}).addTo(map);
+
+		function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+
+			var locationMarker = L.marker(e.latlng).addTo(map)
+				.bindPopup('You are within ' + radius + ' meters from this point').openPopup();
+
+			var locationCircle = L.circle(e.latlng, radius).addTo(map);
+		}
+
+		function onLocationError(e) {
+			alert(e.message);
+		}
+
+		var popup = L.popup()
+			.setLatLng([25.745984, -100.196959])
+			.setContent('I am a standalone popup.')
+			.openOn(map);
+
+		function onMapClick(e) {
+			popup
+				.setLatLng(e.latlng)
+				.setContent('You clicked the map at ' + e.latlng.toString())
+				.openOn(map);
+			
+			var txt_latlon = document.getElementById( "txt_latlon" );
+			var txt_lat    = document.getElementById( "txt_lat"    );
+			var txt_lon    = document.getElementById( "txt_lon"    );
+
+			txt_latlon   .value = e.latlng.toString() ;
+			txt_lat .value 		= e.latlng.lat;
+			txt_lon.value  		= e.latlng.lng;
+
+		}
+
+		map.on('click', onMapClick);
+
+		map.on('locationfound', onLocationFound);
+		map.on('locationerror', onLocationError);
+		map.locate({setView: true, maxZoom: 16});
+
+	</script>
+
+	<form action='{% url "app_01:confirm_geo" %}' method="post"  >
+    
+		<input type="hidden" id="txt_latlon" name="txt_latlon" >
+		<input type="hidden" id="txt_lat"    name="txt_lat"    >
+		<input type="hidden" id="txt_lon"    name="txt_lon"    >
+			
+
+		<p><input type="submit" value='OK' ></p>
+		{% csrf_token %}
+  </form>
+
+
+
+</body>
+</html>

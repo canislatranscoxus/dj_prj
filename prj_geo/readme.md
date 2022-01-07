@@ -14,6 +14,16 @@ run Django Project and open browser in this url
 
 http://127.0.0.1:8000/app_01/confirm_geo
 
+## links
+
+* leaflet tutorials
+https://leafletjs.com/examples.html
+
+* Adding or moving markers on a Leaflet map
+http://bl.ocks.org/ramiroaznar/f399ffd29d1b4d48632604aebfc7b8cc
+
+
+
 
 
 

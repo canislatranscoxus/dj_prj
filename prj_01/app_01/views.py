@@ -7,7 +7,7 @@ from .forms                     import *
 
 # Create your views here.
 
-
+# the choices can be a list of tuples
 sports = [ 
     ( 'tkd', 'Tae Kwon Do'  ), 
     ( 'bjj', 'Jiu Jitsu'    ), 
@@ -23,6 +23,26 @@ sports = [
     ( 'sur', 'Surfing'      ),
     ( 'wis', 'Wind Surfing' ),
 ]
+
+'''
+# the choices can be a list of lists
+sports = [ 
+    [ 'tkd', 'Tae Kwon Do'   ], 
+    [ 'bjj', 'Jiu Jitsu'     ], 
+    [ '8mt', 'Muay Thai'     ],
+    [ '8x8', 'Chess'         ],
+    [ 'wre', 'Wrestling'     ],
+    [ 'jud', 'Judo'          ],
+    [ 'box', 'Boxing'        ],
+    [ 'nin', 'Ninjitsu'      ],
+    [ 'jkd', 'Jeet Kune Do'  ],
+    [ 'sk8', 'Skateboarding' ],
+    [ 'gym', 'Gymnastics'    ],
+    [ 'sur', 'Surfing'       ],
+    [ 'wis', 'Wind Surfing'  ],
+]
+'''
+
 
 def home( request ):
     return render(request, 'home.html' )

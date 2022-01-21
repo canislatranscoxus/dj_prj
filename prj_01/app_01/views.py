@@ -24,6 +24,9 @@ sports = [
     ( 'wis', 'Wind Surfing' ),
 ]
 
+def home( request ):
+    return render(request, 'home.html' )
+
 
 class TakePetView( View ):
     context_object_name = 'take_pet'
@@ -94,22 +97,6 @@ class SportsView( View ):
         return redirect( reverse( 'app_01:my_sport'  ) )
 
 
-        sports = [ 
-            ( 'tkd', 'Tae Kwon Do'  ), 
-            ( 'bjj', 'Jiu Jitsu'    ), 
-            ( '8mt', 'Muay Thai'    ),
-            ( '8x8', 'Chess'        ),
-            ( 'wre', 'Wrestling'    ),
-            ( 'jud', 'Judo'         ),
-            ( 'box', 'Boxing'       ),
-            ( 'nin', 'Ninjitsu'     ),
-            ( 'jkd', 'Jeet Kune Do' ),
-            ( 'sk8', 'Skateboarding'),
-            ( 'gym', 'Gymnastics'   ),
-            ( 'sur', 'Surfing'      ),
-            ( 'wis', 'Wind Surfing' ),
-        ]
-
 
 class MySportView( View ):
     # tkd, Tae Kwon Do, bjj, Jiu Jitsu, 8mt, Muay Thai
@@ -137,6 +124,7 @@ class MySportView( View ):
         form   = DynamicSportForm( request.POST )
         
         sport_id = None
+        sport = None
         if form.is_valid():
             sport_id = form.cleaned_data[ 'sport_id' ] 
         else:
@@ -144,11 +132,11 @@ class MySportView( View ):
 
         for i in sports:
             if i[ 0 ] == sport_id:
-                #request.session[ 'my_sport' ] = i[ 1 ]
+                sport = i[ 1 ]
                 print( i[ 1 ] )
 
 
-        return redirect( reverse( self.success_url ) )
+        return redirect( reverse( self.success_url, args=( sport, ) )  )
 
 
 
@@ -158,5 +146,8 @@ class SportClubView( View ):
 
 
     def get(self, request, *args, **kwargs):
-        
-        return render( request, self.template_name )
+
+        sport = kwargs.get( 'sport', None )
+        my_dic  = { 'sport' : sport }
+        return render( request, self.template_name, my_dic  )     
+

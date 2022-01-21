@@ -1,0 +1,30 @@
+{% load static %}
+
+{% block content %}
+
+
+<h1>Home</h1>
+
+<p>This is a project 1, app_01</p>
+
+<p>Select one option to try </p>
+
+<p>
+    <br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+</p>
+
+<a href='{% url "app_01:take_pet" %}' >
+    <p>
+        Take a pet. Read some arguments and pass them to another view page</b>
+    </p>
+</a>
+
+<a href='{% url "app_01:my_sport" %}' >
+    <p>
+        My Sport. Dynamic Choicefield List. Generate a random list and populate a choicefield</b>
+    </p>
+</a>
+
+
+{% endblock %}
+

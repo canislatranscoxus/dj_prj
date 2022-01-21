@@ -1,0 +1,28 @@
+{% load static %}
+
+{% block content %}
+
+
+<h1>Write all your favourite Sports</h1>
+
+<p>
+    <br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+</p>
+
+<p> type your favourite id and sports separated by commas. Like this: </p>
+<p> wres , wrestling , ko , boxing , ws , wind surf  </p>
+<br >
+    
+<div >
+    <form method="post"  >
+        <p>
+            <textarea id="sports" name="sports" rows="6" cols="80"> </textarea>
+        <br></p>
+
+        <p><input type="submit" value='Send' ></p><br>
+        {% csrf_token %}
+      </form>
+</div>
+
+
+{% endblock %}

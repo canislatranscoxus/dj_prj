@@ -1,0 +1,24 @@
+{% load static %}
+
+{% block content %}
+
+
+<h1>Select your favorite Sport</h1>
+
+<p>
+    <br>&nbsp;<br>&nbsp;<br>&nbsp;<br>
+</p>
+
+<br >
+    
+<div >
+    <form method="post" class="DynamicSportForm"  >
+        {{ form.as_p }}
+
+        <p><input type="submit" value='Send' ></p><br>
+        {% csrf_token %}
+      </form>
+</div>
+
+
+{% endblock %}

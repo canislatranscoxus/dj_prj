@@ -9,37 +9,37 @@ from .forms                     import *
 
 # the choices can be a list of tuples
 sports = [ 
-    ( 'tkd', 'Tae Kwon Do'  ), 
-    ( 'bjj', 'Jiu Jitsu'    ), 
-    ( '8mt', 'Muay Thai'    ),
+    ( 'tkd', 'Tae_Kwon_Do'  ), 
+    ( 'bjj', 'Jiu_Jitsu'    ), 
+    ( '8mt', 'Muay_Thai'    ),
     ( '8x8', 'Chess'        ),
     ( 'wre', 'Wrestling'    ),
     ( 'jud', 'Judo'         ),
     ( 'box', 'Boxing'       ),
     ( 'nin', 'Ninjitsu'     ),
-    ( 'jkd', 'Jeet Kune Do' ),
+    ( 'jkd', 'Jeet_Kune_Do' ),
     ( 'sk8', 'Skateboarding'),
     ( 'gym', 'Gymnastics'   ),
     ( 'sur', 'Surfing'      ),
-    ( 'wis', 'Wind Surfing' ),
+    ( 'wis', 'Wind_Surfing' ),
 ]
 
 '''
 # the choices can be a list of lists
 sports = [ 
-    [ 'tkd', 'Tae Kwon Do'   ], 
-    [ 'bjj', 'Jiu Jitsu'     ], 
-    [ '8mt', 'Muay Thai'     ],
+    [ 'tkd', 'Tae_Kwon_Do'   ], 
+    [ 'bjj', 'Jiu_Jitsu'     ], 
+    [ '8mt', 'Muay_Thai'     ],
     [ '8x8', 'Chess'         ],
     [ 'wre', 'Wrestling'     ],
     [ 'jud', 'Judo'          ],
     [ 'box', 'Boxing'        ],
     [ 'nin', 'Ninjitsu'      ],
-    [ 'jkd', 'Jeet Kune Do'  ],
+    [ 'jkd', 'Jeet_Kune_Do'  ],
     [ 'sk8', 'Skateboarding' ],
     [ 'gym', 'Gymnastics'    ],
     [ 'sur', 'Surfing'       ],
-    [ 'wis', 'Wind Surfing'  ],
+    [ 'wis', 'Wind_Surfing'  ],
 ]
 '''
 
@@ -122,29 +122,23 @@ class MySportView( View ):
     # tkd, Tae Kwon Do, bjj, Jiu Jitsu, 8mt, Muay Thai
     context_object_name = 'my_sport'
     template_name       = 'my_sport.html'
-
     success_url         = 'app_01:sport_club'
     form_class          = DynamicSportForm
 
-
-
     def get(self, request, *args, **kwargs):
-        
         # generate dynamically a list of choices and pass it to the form.
-        choices = random.sample( sports, 3 )
+        choices  = random.sample( sports, 3 )
 
-        form    = DynamicSportForm( request.POST, choices = choices, initial={ 'sport_id' : choices[0][0] }  )
-
+        # select the firt option by deafult
+        form     = DynamicSportForm( choices = choices, initial={ 'sport_id' : choices[0][0] }  )
         my_dic  = { 'form' : form }
         return render( request, self.template_name, my_dic  )     
 
-
     def post( self, request ):
-
-        form   = DynamicSportForm( request.POST )
-        
+        form     = DynamicSportForm( request.POST )
         sport_id = None
-        sport = None
+        sport    = None
+
         if form.is_valid():
             sport_id = form.cleaned_data[ 'sport_id' ] 
         else:
@@ -155,15 +149,12 @@ class MySportView( View ):
                 sport = i[ 1 ]
                 print( i[ 1 ] )
 
-
         return redirect( reverse( self.success_url, args=( sport, ) )  )
-
 
 
 class SportClubView( View ):
     context_object_name = 'sport_club'
     template_name       = 'sport_club.html'
-
 
     def get(self, request, *args, **kwargs):
 

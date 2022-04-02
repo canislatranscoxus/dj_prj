@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+
+<html>
+<body>
+  <a class="a_company_logo" href="/{{ LANGUAGE_CODE }}/">
+    <div class="div_img" >
+      
+      <img  class="" 
+            src='https://besthqwallpapers.com/Uploads/6-2-2019/79685/thumb2-bald-eagle-large-beak-american-bird-birds-of-prey-sea-eagles.jpg' 
+      >
+
+    </div>
+  </a>
+
+  <p>
+    From: {{ _from }}</br>
+    To  : {{ _to }}
+  </p>
+
+  <p>
+      {{ _message }}
+  </p>
+
+
+
+</body>
+</html>

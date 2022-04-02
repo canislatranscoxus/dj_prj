@@ -23,7 +23,12 @@ https://leafletjs.com/examples.html
 http://bl.ocks.org/ramiroaznar/f399ffd29d1b4d48632604aebfc7b8cc
 
 
+* working examples
 
+https://plnkr.co/edit/PTFlun?p=preview&preview
+https://stackoverflow.com/questions/27271994/leaflet-draggable-marker-and-coordinates-display-in-a-field-form
+
+https://codepen.io/PyroStrex/pen/JKpGKv
 
 
 

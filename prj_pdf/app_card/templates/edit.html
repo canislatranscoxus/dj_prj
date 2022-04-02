@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+
+<html>
+<body>
+
+<h1>Edit a card for a special person </h1>    
+
+<form method="post" >
+    <table>
+        {{form.as_table}}
+        {% csrf_token %}
+    </table>
+    <br/>
+    <input type="submit" name="" value="Submit">
+</form>
+
+</body>
+</html>

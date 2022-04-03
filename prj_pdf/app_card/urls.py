@@ -16,4 +16,7 @@ urlpatterns = [
     # here we create and load a pdf to the browser
     path( 'load_pdf/', views.LoadPdfView.as_view(),  name = 'load_pdf' ),
 
+    # here we create the pdf object, put in into a BytesIO object, next save to file
+    path( 'save_pdf/', views.SavePdfView.as_view(),  name = 'save_pdf' ),
+
 ]

@@ -1,4 +1,9 @@
+from io                     import BytesIO
+from pathlib import Path
+from os.path                import join
+
 import weasyprint
+from   weasyprint           import HTML
 
 from datetime               import datetime
 from os                     import path
@@ -81,15 +86,12 @@ class LoadPdfView( View ):
     #success_url         = 'app_card:preview'
     template_name       = 'pdf.html'
 
-    # ~/git/dj_prj/prj_pdf/my_pdf
-    tar_dir = '/home/art/git/dj_prj/prj_pdf/my_pdf/'
-
-
     def get(self, request, *args, **kwargs):
         try:
             dt        = datetime.now()
-            # you can pass a dictionary with data, like in the example below.
+            filename  = 'filename={}.pdf'.format( dt.isoformat( timespec= 'seconds' ) )
 
+            # you can pass a dictionary with data, like in the example below.
             my_dic = {
                 'from_name' : self.request.session[ 'from_name' ],
                 'to_name'   : self.request.session[ 'to_name'   ],
@@ -98,43 +100,67 @@ class LoadPdfView( View ):
             }
 
             html                            = render_to_string('pdf.html', my_dic )
-
             response                        = HttpResponse(content_type='application/pdf')
-            #response['Content-Disposition'] = f'filename=order_{order.id}.pdf'
-            response['Content-Disposition'] =  'filename={}.pdf'.format( dt.isoformat( timespec= 'seconds' ) )
+            response['Content-Disposition'] =  filename
+            css_path                        = path.join( settings.STATICFILES_DIRS[0], 'css/pdf.css' )
 
-
-            ##css_path = os.path.join(settings.STATIC_ROOT, 'css/pdf.css')
-            css_path = path.join( settings.STATICFILES_DIRS[0]  , 'css/pdf.css' )
-
-            weasyprint.HTML     ( string=html, base_url=request.build_absolute_uri() 
-                    ).write_pdf(response, stylesheets=[ weasyprint.CSS( css_path )])
+            weasyprint.HTML     ( string=html, base_url=request.build_absolute_uri()  
+                     ).write_pdf( response, stylesheets=[ weasyprint.CSS( css_path )] )
 
             return response
-
-            #return render( request, self.template_name )
-
         except Exception as e:
             print( 'PreviewView.get(), ... {}'.format( e ) )
             raise
 
 
+class SavePdfView( View ):
+    context_object_name = 'preview'
+    template_name       = 'pdf_saved.html'
+    downloads_dir       = '{}/Downloads/'.format( Path.home() )
 
+    def get(self, request, *args, **kwargs):
+        try:
+            dt        = datetime.now()
+            filename  = '{}.pdf'.format( dt.isoformat( timespec= 'seconds' ) )
+            file_path = join( self.downloads_dir, filename )
+
+            # you can pass a dictionary with data, like in the example below.
+            my_dic = {
+                'from_name' : self.request.session[ 'from_name' ],
+                'to_name'   : self.request.session[ 'to_name'   ],
+                'message'   : self.request.session[ 'message'   ],
+                'img_url'   : self.request.session[ 'img_url'   ],
+                'file_path' : file_path,
+            }
+            
+            # generate PDF
+            html                            = render_to_string('pdf.html', my_dic )
+            #response                        = HttpResponse(content_type='application/pdf')
+            #response['Content-Disposition'] =  filename
+
+            htmldoc = HTML( string=html, base_url="" )
+            out         = BytesIO()
+
+            css_path    = join( settings.STATICFILES_DIRS[0], 'css', 'pdf.css' )
+            stylesheets = [ weasyprint.CSS( css_path ) ]
+
+            weasyprint.HTML     ( string=html, base_url=request.build_absolute_uri() 
+                     ).write_pdf( out, stylesheets = stylesheets  )
+
+            # save file
+            with open( file_path, "wb") as f:
+                f.write( out.getbuffer())
+
+            return render( request, self.template_name, my_dic )
+
+        except Exception as e:
+            print( 'SavePdfView.get(), ... {}'.format( e ) )
+            raise
 
 
 
 
 '''
-    def save_file( self, obj ):
-        try:
-            dt        = datetime.now()
-            s         = dt.isoformat( timespec= 'seconds' ) + '.pdf'
-            file_name = path.join( self.tar_dir, s )
-            print( file_name )
 
-
-        except Exception as e:
-            print(  )
-
-
+downloads_path = str(Path.home() / "Downloads")
 '''

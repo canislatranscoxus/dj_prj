@@ -7,8 +7,8 @@ from django.forms.widgets       import DateInput
 
 class CardForm( forms.Form ):
     
-    from_name    = forms.CharField( label = 'From', initial= 'Eagle Wings'  )
-    to_name      = forms.CharField( label = 'To'  , initial = 'Bananitz'    )
+    from_name    = forms.CharField( label = 'From', initial= 'Canis'  )
+    to_name      = forms.CharField( label = 'To'  , initial = 'Bananits'    )
     message = forms.CharField( widget=forms.Textarea, label = 'Message', initial= 'Te quiero mucho' )
     
     img_url = forms.CharField( 

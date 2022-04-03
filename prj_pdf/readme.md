@@ -31,3 +31,20 @@ python manage.py startapp app_card
 
 
 ### install libraries
+
+
+### Links and resources
+
+Here we have links to some useful documents and examples.
+
+* Weasyprint Official Site
+https://weasyprint.org/
+
+* Python PDF Generation from HTML with WeasyPrint
+https://dev.to/bowmanjd/python-pdf-generation-from-html-with-weasyprint-538h
+Jonathan Bowman
+Posted on Oct 17, 2020
+
+* PDF output using Weasyprint not showing images (Django)
+https://stackoverflow.com/questions/48988707/pdf-output-using-weasyprint-not-showing-images-django
+

@@ -20,7 +20,7 @@ from django.conf.urls   import include
 urlpatterns = [
     path('admin/'   , admin.site.urls),
     path( ''        , include( 'app_card.urls', namespace='app_card' ) ),
-    path( 'app_card', include( 'app_card.urls', namespace='app_card' ) ),
+    #path( 'app_card', include( 'app_card.urls', namespace='app_card' ) ),
 ]
 
 
